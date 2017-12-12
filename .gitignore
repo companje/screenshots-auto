@@ -1,0 +1,6 @@
+experiments/
+movies/
+.DS_Store
+*.txt
+*.mjpeg
+*.mp4
