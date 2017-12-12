@@ -1,17 +1,20 @@
 #!/bin/bash
 
 vardate=$(date +%Y\-%m\-%d); 
-
-for i in *.mjpeg; do
+for i in mjpeg/*.mjpeg; do
     echo -n "Converting '$i'..."
 
-    if [[ "$vardate.mjpeg" == "$i" ]]; then
+    if [[ "mjpeg/$vardate.mjpeg" == "$i" ]]; then
         echo "SKIP"
     else
-        name="${i%.*}"
-        ffmpeg -i $i -vcodec mpeg4 -q:v 0 -loglevel error movies/$name.mp4
+		filename=${i##*/} #filename from path
+        name="${filename%.*}" #name without extension
 
-		if [[ -s movies/$name.mp4 ]]; then rm $i; fi  # delete original when mp4 was created successfully
+        echo -n " to 'mp4/$name.mp4'..."
+
+        ffmpeg -i $i -vcodec mpeg4 -q:v 0 -loglevel error mp4/$name.mp4
+
+		# if [[ -s mp4/$name.mp4 ]]; then rm $i; fi  # delete original when mp4 was created successfully
 
         echo "OK"
     fi
